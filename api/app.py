@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 import requests
 
-from reptile_utilities import is_local
+from reptile_utilities import is_local, get_lat_lon
 # Create a Flask application instance
 app = Flask(__name__)
 
@@ -18,16 +18,17 @@ else:
 # Define a simple endpoint
 @app.route('/weather/<city>', methods=['GET'])
 def single_city_forecast(city):
-    sacramento = (38.5781,121.4944)
-    complete_url = f"{weather_api_base_url}/onecall?lat={sacramento[0]}&lon={sacramento[1]}&appid={api_key}"
+    (lat,lon) = get_lat_lon(city)
+    complete_url = f"{weather_api_base_url}/onecall?lat={lat}&lon={lon}&appid={api_key}&units=imperial"
     response = requests.get(complete_url)
 
     if response.status_code == 200:
         data = response.json()
 
-        weather_data = data['weather'][0]
-        temperature = data['main']['temp']
-        body = {'city':city,'weather':weather_data,'temperature':temperature}
+        temp_data = data['daily'][0]['temp']
+        min_temperature = temp_data['min']
+        max_temperature = temp_data['max']
+        body = {'city':'sacramento','min temp':min_temperature,'max temp':max_temperature}
     else:
         body = {'message': "Request failed","satus_code":response.status_code}
     return jsonify(body)
