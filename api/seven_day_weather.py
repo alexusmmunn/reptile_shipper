@@ -8,7 +8,7 @@ import requests
 import datetime as dt
 
 from reptile_utilities import is_local, get_lat_lon, round_temp_to_nearest_int
-import error_codes
+from error_codes import HTTPError,create_custom_third_party_api_error, CITY_NOT_FOUND_ERROR
 
 if is_local():
     api_key = os.getenv("LOCAL_USE_API_KEY")
@@ -25,6 +25,8 @@ def city_daily_max_min_temp(city:str, state_code:str, date:dt=dt.datetime.now())
         If no date is specified, we use today as default.
     """
     (lat,lon) = get_lat_lon(city, state_code)
+    if not lat:
+        raise CITY_NOT_FOUND_ERROR
     date = date.strftime("%Y-%m-%d")
     complete_url = f"{weather_api_base_url}/onecall/day_summary?lat={lat}&lon={lon}&date={date}&appid={api_key}&units=imperial"
     response = requests.get(complete_url)
@@ -38,7 +40,9 @@ def city_daily_max_min_temp(city:str, state_code:str, date:dt=dt.datetime.now())
         temps = {'min_temp':min_temperature,'max_temp':max_temperature}
         return temps
     else:
-        error_codes.create_custom_third_party_api_error(response)
+        message = create_custom_third_party_api_error(response)
+        raise HTTPError(message, 400)
+        
 
 def city_seven_day_forcast(city:str, state_code:str, first_day:dt=dt.datetime.now())->dict:
     """

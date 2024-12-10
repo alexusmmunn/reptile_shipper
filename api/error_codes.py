@@ -2,22 +2,20 @@
 Error codes used to handle various issues with processing in the backend
 """
 
-class ErrorCode(Exception):
-    def __init__(self, code, message):
-        self.code = code
+#XXX: Need to rework this to be a bit more sensical. Different errors handled differently diff places...
+class HTTPError(Exception):
+    def __init__(self, message, status_code):
+        super().__init__(message)
         self.message = message
-        super().__init__(self.message)
+        self.status_code = status_code
 
-    def __repr__(self):
-        return f"Error {self.code}: {self.message}"
-    
-CITY_NOT_FOUND_ERROR = ErrorCode(code=400, message="Specified city not found.")
-CITY_NOT_APPLICABLE_ERROR = ErrorCode(code=400, message="Specified city is not supported, or does not contian a FedEx hub")
-UNKNOWN_ERROR = ErrorCode(code=500,message="An unexpected error has occured.")
+CITY_NOT_FOUND_ERROR = HTTPError("Specified city not found.",400)
+CITY_NOT_APPLICABLE_ERROR =HTTPError("Specified city is not supported, or does not contian a FedEx hub",400)
+UNKNOWN_ERROR = HTTPError("An unknown error occured",500)
 
 
 def create_custom_third_party_api_error(api_response):
     if api_response.status_code and api_response.text:
-        return ErrorCode(api_response.status_code, api_response.text)
+        return f"Status code: {api_response.status_code} from 3rd party api. Details: {api_response.text}"
     else:
         return UNKNOWN_ERROR
