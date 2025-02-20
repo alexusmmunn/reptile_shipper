@@ -10,9 +10,9 @@ from geopy.exc import GeopyError
 import error_codes
 
 enviornment = os.getenv("ENVIRONMENT")
-reptile_user_agent = os.getenv("GEOPY_USER_AGENT")
+reptile_user_agent_name = os.getenv("GEOPY_USER_AGENT_NAME")
 
-geolocator = Nominatim(user_agent="reptile_shipper")
+geolocator = Nominatim(user_agent=reptile_user_agent_name)
 
 def is_local()-> bool:
     """
