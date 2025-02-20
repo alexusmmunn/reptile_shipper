@@ -16,9 +16,9 @@ app = Flask(__name__)
 
 # Handle rate limiting
 if is_local():
-    RATE_LIMIT = "5 per minute"
+    RATE_LIMIT = "999 per day"
 else:
-    RATE_LIMIT = "100 per hour"
+    RATE_LIMIT = "999 per day"
 # Initialize Limiter
 limiter = Limiter(
     get_remote_address,  # Uses client's IP for rate limiting
