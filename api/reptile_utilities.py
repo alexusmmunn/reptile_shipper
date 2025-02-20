@@ -6,14 +6,14 @@ import os
 # requires free account activated here
 from geopy.geocoders import Nominatim
 from geopy.exc import GeopyError
+from error_codes import HTTPError
 
 import error_codes
 
 enviornment = os.getenv("ENVIRONMENT")
-reptile_user_agent = os.getenv("GEOPY_USER_AGENT")
 
 geolocator = Nominatim(user_agent="reptile_shipper")
-
+   
 def is_local()-> bool:
     """
     If enviornment is local, return true
