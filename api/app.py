@@ -1,8 +1,6 @@
 from flask import Flask, jsonify, request
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
-from dotenv import load_dotenv
+from flask_cors import CORS
 import os
-import requests
 
 from seven_day_weather import city_seven_day_forcast
 from error_codes import HTTPError
@@ -11,6 +9,9 @@ API_KEY = os.getenv("AUTHENTICATION_KEY")
 
 # Create a Flask application instance
 app = Flask(__name__)
+
+# Allow calls from local front end for dev purposes
+CORS(app, origins=["http://localhost:3000"])
 
 # Authenticator for requests
 def authenticate(request):
