@@ -6,9 +6,6 @@ import os
 # requires free account activated here
 from geopy.geocoders import Nominatim
 from geopy.exc import GeopyError
-from error_codes import HTTPError
-
-import error_codes
 
 enviornment = os.getenv("ENVIRONMENT")
 
