@@ -28,7 +28,7 @@ CORS(app, origins=["http://localhost:3000","https://reptile-shipper.vercel.app"]
 # XXX: Actually, this may not matter since in all likelihood requests are coming from two different IPs...
 RATE_LIMIT = "999 per day"
 limiter = Limiter(
-    get_remote_address,  # Uses client's IP for rate limiting
+    key_func=lambda: "global",  # Uses client's IP for rate limiting
     app=app,
     default_limits=[RATE_LIMIT],
     storage_uri=REDIS_URL
