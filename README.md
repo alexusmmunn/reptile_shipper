@@ -1,7 +1,11 @@
 # reptile_shipper
 A tool used to make sure that various routing cities have weather fit for reptilian friends
 
-# Reptile Shipper API
+# Reptile Shipper App (Frontend)
+## Production Deployment
+**Manual deployment required**
+The frontend is currently run on Vercel (https://vercel.com/guides/deploying-react-with-vercel). **Manual deployment required**
+# Reptile Shipper API (Backend)
 Local and production currently use the same Geopy account. There's a limit of 1000 requests a day. In the future it might make sense to separately rate limit local/prod. For now, 
 since it's just me toiling away here, I'm tracking the rate limiting for both in the same place. Because I don't want a random Geopy bill.
 
@@ -11,6 +15,7 @@ Since all requests are coming from **my** app, there is a token stored on the en
 To run the Reptile shipper API locally, use the following gunicorn command: gunicorn -w 1 -b 0.0.0.0:10000 app:app (increase number of workers if needed)
 
 ## Production Deployment
+**Manual deployment required**
 ### Render
 The production API is run on a service called Render. Currently on the FREE tier. 
 
