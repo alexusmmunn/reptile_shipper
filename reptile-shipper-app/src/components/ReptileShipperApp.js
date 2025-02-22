@@ -15,14 +15,23 @@ const ReptileShipperApp = () => {
       alert("Please enter both city and state");
       return;
     }
+    let baseUrl = 'invalid';
+    console.log('baseurl:',baseUrl);
+    // Running locally with npm start
+    if (process.env.NODE_ENV === 'development') {
+      baseUrl = process.env.REACT_APP_LOCAL_API_BASE_URL;
+    }
+    // Running npm run build in prod
+    if (process.env.NODE_ENV === 'production'){
+      baseUrl = process.env.REACT_APP_PRODUCTION_API_BASE_URL;
+    }
 
-    const apiUrl = 'http://127.0.0.1:5000/weather/${state}/${city}';
+    const apiUrl = `${baseUrl}/weather/${state}/${city}`;
     const headers = {
       "Content-Type": "application/json",
       "x-api-key": `${process.env.REACT_APP_REPTILE_SHIPPER_API_KEY}`,
     };
-
-    console.log("headers:",headers);
+    console.log("api url:",apiUrl);
     try {
       const response = await fetch(apiUrl, {
         method: "GET",
@@ -31,9 +40,7 @@ const ReptileShipperApp = () => {
       if (!response.ok) {
         throw new Error("Failed to fetch weather data");
       }
-
       const data = await response.json();
-      console.log("API Response:", data);
       setWeatherData(data); // Set the data to state
     } catch (error) {
       setError(error.message); // Handle any errors

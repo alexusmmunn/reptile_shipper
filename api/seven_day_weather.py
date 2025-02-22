@@ -9,14 +9,19 @@ import datetime as dt
 
 from reptile_utilities import is_local, get_lat_lon, round_temp_to_nearest_int
 from error_codes import HTTPError,create_custom_third_party_api_error, CITY_NOT_FOUND_ERROR
+from dotenv import load_dotenv
 
+# load variables from .env since sometimes Flask doesn't do this automatically
+load_dotenv()
+
+# TODO: eventually these will perhaps be different, for now they are the same
 if is_local():
     api_key = os.getenv("LOCAL_USE_API_KEY")
     weather_api_base_url = os.getenv("OPEN_WEATHER_BASE_API_URL")
-   
 else:
-    api_key = None
-    weather_api_base_url = None
+    api_key = os.getenv("LOCAL_USE_API_KEY")
+    weather_api_base_url = os.getenv("OPEN_WEATHER_BASE_API_URL")
+   
 
 def city_daily_max_min_temp(city:str, state_code:str, date:dt=dt.datetime.now())->dict:
     """
