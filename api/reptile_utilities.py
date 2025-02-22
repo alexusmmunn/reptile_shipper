@@ -1,6 +1,5 @@
 # Used to store a hodge podge of utility functions I use elseware
 
-from dotenv import load_dotenv
 import os
 # https://www.geonames.org/servlet/geonames?
 # requires free account activated here
