@@ -19,7 +19,7 @@ REDIS_URL = os.getenv("REDIS_URL")
 app = Flask(__name__)
 
 
-# Allow calls from local front end
+# Allow calls from local front end + production app
 CORS(app, origins=["http://localhost:3000","https://reptile-shipper.vercel.app"])
 
 # You might think it's weird to use Redis for local rate limiting - and you're right.
