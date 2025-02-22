@@ -80,10 +80,10 @@ const ReptileShipperApp = () => {
               <li key={day.date} className="flex justify-between p-2 border-b">
                 <span className="text-gray-700">{day.date}</span>
                 <span className="text-blue-600">
-                  Max: {day.temps.max_temp}°C
+                  Max: {day.temps.max_temp}°F
                 </span>
                 <span className="text-red-600">
-                  Min: {day.temps.min_temp}°C
+                  Min: {day.temps.min_temp}°F
                 </span>
               </li>
             ))}

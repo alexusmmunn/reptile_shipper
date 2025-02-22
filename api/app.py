@@ -19,13 +19,12 @@ REDIS_URL = os.getenv("REDIS_URL")
 app = Flask(__name__)
 
 
-# Allow calls from local front end
+# Allow calls from local front end + production app
 CORS(app, origins=["http://localhost:3000","https://reptile-shipper.vercel.app"])
 
 # You might think it's weird to use Redis for local rate limiting - and you're right.
 # I'm currently using the free tier of Geopy, I don't want to go over the daily limit 
 # between local and production. Track both with one rate limiting value.
-# XXX: Actually, this may not matter since in all likelihood requests are coming from two different IPs...
 RATE_LIMIT = "999 per day"
 limiter = Limiter(
     key_func=lambda: "global",  # Uses client's IP for rate limiting
