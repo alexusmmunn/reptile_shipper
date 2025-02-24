@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import TemperatureComponent from "./Temperature";
 
 const capitalizeFirstLetter = (value) => {
   if (!value) return "";
@@ -50,9 +51,11 @@ const WeatherForecast = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
-      <div className="p-2 bg-white shadow-md rounded-lg w-half max-w-md text-center">
-        <h1 className="text-l font-bold text-gray-800 mb-2">Reptile Shipper</h1>
+    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 p-5">
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
+      <div className="p-2 bg-white shadow-md rounded-lg w-half max-w-md text-center bg-pink-50">
+        <h1 className="text-xl font-bold text-gray-800">Reptile Shipper</h1>
       </div>
       <input
         type="text"
@@ -68,20 +71,18 @@ const WeatherForecast = () => {
         onChange={handleStateChange}
         className="border p-2 my-2 rounded"
       />
-      <button className="border border-gray-500 px-4 py-2 rounded" onClick={handleSubmit}>Get Weather</button>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
+      <button className="border bg-pink-50 border-gray-500 px-4 py-2 rounded p-5 mb-4" onClick={handleSubmit}>Get Weather</button>
+      
       {weatherData && (
-        <div className="p-4 max-w-md mx-auto bg-white rounded-lg shadow-md">
+        <div className="p-4 max-w-md mx-auto bg-white rounded-lg shadow-md min-w-[955px]">
           <h1 className="text-xl font-bold text-gray-800">
             Weather in {capitalizeFirstLetter(weatherData.city)}, {weatherData.state.toUpperCase()}
           </h1>
-          <div className="flex overflow-x-auto space-x-4 p-2 border border-gray-300">
+          <div className="flex overflow-x-auto space-x-2 p-2">
             {Object.entries(weatherData.temps).map(([date, temps]) => (
-              <li key={date} className="flex flex-col items-center p-2 border rounded bg-gray-50">
+              <li key={date} className="flex flex-col items-center p-2 border rounded bg-gray-50 min-w-[120px]">
                 <span className="text-gray-700 font-semibold">{date} </span>
-                <span className="text-blue-600"> Max: {temps[1]}°F</span>
-                <span className="text-red-600"> Min: {temps[0]}°F</span>
+                <TemperatureComponent maxTemp={temps[1]} minTemp={temps[0]}/>
               </li>
             ))}
           </div>
