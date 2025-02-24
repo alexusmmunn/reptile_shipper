@@ -13,8 +13,7 @@ The frontend is currently run on Vercel (https://vercel.com/guides/deploying-rea
 Run locally with NPM start. Frontend env vars are set up to ping the local backend when frontend is running locally.
 
 ## Reptile Shipper API (Backend)
-Local and production currently use the same Geopy account. There's a limit of 1000 requests a day. In the future it might make sense to separately rate limit local/prod. For now, 
-since it's just me toiling away here, I'm tracking the rate limiting for both in the same place. Because I don't want a random Geopy bill.
+A wrapper around the open-mateo API https://open-meteo.com/ 
 
 ### Authentication
 Since all requests are coming from **my** app, there is a token stored on the enviornments to authorize requests.
@@ -22,7 +21,6 @@ Since all requests are coming from **my** app, there is a token stored on the en
 To run the Reptile shipper API locally, use the following gunicorn command: gunicorn -w 1 -b 0.0.0.0:10000 app:app (increase number of workers if needed)
 
 ### Production Deployment
-**Manual deployment required**
 #### Render
 The production API is run on a service called Render. Currently on the FREE tier. 
 
