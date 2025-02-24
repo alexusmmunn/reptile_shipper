@@ -5,9 +5,6 @@ for processing
 
 import os
 import requests
-import datetime as dt
-import pandas as pd
-from retry_requests import retry
 
 from reptile_utilities import is_local, get_lat_lon, round_temp_to_nearest_int
 from error_codes import HTTPError,create_custom_third_party_api_error, CITY_NOT_FOUND_ERROR
